@@ -1,0 +1,36 @@
+0.  A lung disease otherwise known of as silicosis.  Longest word in the English language
+published in a dictionary.  It is an occupational lung disease
+that is caused by the inhalation of silica dust.
+
+1.  getrusage is used to determine the resource cost of a process, and any of it's children/descendant's
+processes.  Can be used to determine how much time a process takes.
+
+2.  getrusage has 16 member variables.  14 are longs and 2 are struct timevals
+
+3.  I think that they are passed by reference to handle the case in which either of them
+has a NULL pointer.  This case is handled by the calculate function, and bad errors could
+occur if NULL pointers are passed into the function and not handled appropriately.
+
+4.  The loop is iterated over each character in the text file.  If the character is
+alphabetical or an apostrophe, it is appended to a current "word" being looked at.
+If a numeric value is found, the spell-checker will not analyze the validity of the word.
+So, the file pointer is moved forward until the next non-alphanumeric character.  As well,
+if there is a string of alphabetical characters longer than the maximum word length,
+again the word will not be checked, and the variable "word" is reset.
+
+If a character is read that is neither alphanumeric, or an apostrophe, this is taken to 
+signify the end of a word.  The current word would then be appended with the '\0'
+character, words is incremented, and the word is checked against the dictionary being used.  The time taken
+for the check will be appended to the total length of time taken for checking words (time_check).
+If the word is misspelled, the mispelled word is printed to stdout, and the number of misspelled words
+(misspellings) is incremented.  Word is then reset.
+
+5.  Using fscanf would probably be possible, however it would probably be less efficient.
+For each word that is scanned, the word would subsequently have to be searched for
+numeric characters.  It would also have to be searched (and split into multiple words) if there were
+any words in the text separated by puncuation with no spaces.  Both of these situations are 
+far more easily handled by simply using fgetc.
+
+6.  The parameters are declared as constants because the check and load functions should not 
+change the word or dictionary variables in any way.  This declaration ensures that the programmer
+does not inadvertently change those variables - because if they do an error will occur.
